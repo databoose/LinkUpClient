@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LinkUp</string>
+    <string name="linkup">LinkUp</string>
+    <string name="go">Go</string>
+
+    <!-- our external icons -->
+    <string name="info_ic_person">Person icon</string>
+    <string name="info_ic_wave">Wave icon</string>
+</resources>
