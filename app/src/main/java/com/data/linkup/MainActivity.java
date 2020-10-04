@@ -42,13 +42,14 @@ class ConnTask implements Runnable
                 }
 
                 else {
-                    Log.e("ConnThread","Did not get confirmation string from server, instead got this : " + readLine);
+                    Log.e("ConnThread", "Did not get confirmation string from server, instead got this : " + readLine);
                 }
-
-                sock.close();
             }
+
+            sock.close();
+            Thread.sleep(50); //80ms to mitigate spamming
         }
-        catch (IOException e) {
+        catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
