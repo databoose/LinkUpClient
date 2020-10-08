@@ -14,40 +14,30 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+// ny3_ is precode to hwid string
+
 class ConnTask implements Runnable
 {
     public void run()
     {
-        try {
+        NetUtils NetUtils = new NetUtils();
+
+        try
+        {
             Socket sock = new Socket("10.0.0.224", 64912);
             sock.setSoTimeout(12000);
 
-            PrintWriter pw = new PrintWriter(sock.getOutputStream());
-            pw.write("Ar4#8Pzw<&M00Nk");
-            pw.flush();
+            BufferedReader netin = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            PrintWriter netout = new PrintWriter(sock.getOutputStream());
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-
-            while (true)
-            {
-                String readLine = in.readLine();
-
-                if (readLine == null) {
-                    sock.close();
-                    break;
-                }
-
-                else if (readLine.equals("4Ex{Y**y8wOh!T00")) {
-                    Log.i("ConnThread","Server has confirmed that it has gotten our verification string");
-                }
-
-                else {
-                    Log.e("ConnThread", "Did not get confirmation string from server, instead got this : " + readLine);
-                }
+            int ConnVerifyStatus = NetUtils.ConnVerify(netin, netout, sock);
+            if(ConnVerifyStatus == 1) {
+                Log.d("ConnThread", "Verified");
             }
 
+            Log.d("ConnThread", "Closing socket now");
             sock.close();
-            Thread.sleep(50); //80ms to mitigate spamming
+            Thread.sleep(50); //50ms to mitigate spamming
         }
         catch (IOException | InterruptedException e) {
             e.printStackTrace();
