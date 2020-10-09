@@ -20,7 +20,7 @@ class ConnTask implements Runnable
 {
     public void run()
     {
-        NetUtils NetUtils = new NetUtils();
+        NetUtils NetUtilsObj = new NetUtils();
 
         try
         {
@@ -30,10 +30,7 @@ class ConnTask implements Runnable
             BufferedReader netin = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             PrintWriter netout = new PrintWriter(sock.getOutputStream());
 
-            int ConnVerifyStatus = NetUtils.ConnVerify(netin, netout, sock);
-            if(ConnVerifyStatus == 1) {
-                Log.d("ConnThread", "Verified");
-            }
+            NetUtilsObj.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
 
             Log.d("ConnThread", "Closing socket now");
             sock.close();
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity
 
     public void btnGo(View v)
     {
-        Log.d("btnGo","Clicked");
+        // Log.d("btnGo","Clicked");
         Thread tconn = new Thread(new ConnTask());
         tconn.start(); // starting thread to handle connection for us, doesn't mess with UI thread
     }
