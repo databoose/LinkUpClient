@@ -1,36 +1,30 @@
 package com.data.linkup;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Socket;
 
 public class NetUtils
 {
-    int ConnVerify(BufferedReader netin, PrintWriter netout, Socket sock)
-    {
+    void SendAndWaitReply(String BufferOut, String ExpectedReply, BufferedReader netin, PrintWriter netout) throws IOException {
         try
         {
-            netout.write("Ar4#8Pzw<&M00Nk");
+            netout.write(BufferOut);
             netout.flush();
+            System.out.println("Sent outwards buffer to server, waiting for response from server");
 
-            do {
-                String readLine = netin.readLine();
-
-                if (readLine.equals("4Ex{Y**y8wOh!T00"))  {
-                    return 1;
-                }
-                else {
-                    Log.e("ConnThread", "Did not get confirmation string from server, instead got this : " + readLine);
-                    return 0;
-                }
+            if (netin.readLine().equals(ExpectedReply)) {
+                System.out.println("Got expected string from server");
             }
-            while (true);
+            else {
+                System.out.println("Receive failure, did not get expected string...");
+                System.out.println("Got : " + netin.readLine());
+            }
         }
-        catch (IOException e) { Log.d("Connection-Verification", "Caught IOException"); }
-
-        return 0; // this should be literally impossible to reach but compiler complains so this is why it's here
+        catch (IOException e) { e.printStackTrace();}
+        catch (NullPointerException z) {
+            System.out.println("Null pointer exception, most likely the server cut off while we were waiting on readLine()");
+            z.printStackTrace();
+        }
     }
 }
