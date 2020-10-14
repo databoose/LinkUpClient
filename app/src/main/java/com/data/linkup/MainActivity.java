@@ -31,6 +31,7 @@ class ConnTask implements Runnable
             PrintWriter netout = new PrintWriter(sock.getOutputStream());
 
             NetUtilsObj.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
+            NetUtilsObj.Send(Globals.HwidString, netout); // Sending HWID
 
             Log.d("ConnThread", "Closing socket now");
             sock.close();
@@ -50,9 +51,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String HwidString = Settings.Secure.getString(getContentResolver(), "android_id");
-        ((TextView) findViewById(R.id.lblHwid)).setText(HwidString);
+        Main();
     }
+
+    public void Main()
+    {
+        Globals.HwidString = Settings.Secure.getString(getContentResolver(), "android_id");
+        ((TextView) findViewById(R.id.lblHwid)).setText(Globals.HwidString);
+    }
+
 
     public void btnGo(View v)
     {
