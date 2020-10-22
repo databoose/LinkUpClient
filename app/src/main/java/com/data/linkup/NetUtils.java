@@ -6,7 +6,8 @@ import java.io.PrintWriter;
 
 public class NetUtils
 {
-    void SendAndWaitReply(String BufferOut, String ExpectedReply, BufferedReader netin, PrintWriter netout) {
+    int SendAndWaitReply(String BufferOut, String ExpectedReply, BufferedReader netin, PrintWriter netout)
+    {
         try
         {
             netout.write(BufferOut);
@@ -15,18 +16,24 @@ public class NetUtils
 
             if (netin.readLine().equals(ExpectedReply)) {
                 System.out.println("Got expected string from server");
+                return 1;
             }
+
             else {
                 System.out.println("Receive failure, did not get expected string...");
                 System.out.println("Got : " + netin.readLine());
+
+                return 0;
             }
         }
 
         catch (IOException e) { e.printStackTrace();}
         catch (NullPointerException z) {
             System.out.println("Null pointer exception, most likely the server cut off while we were waiting on readLine()");
-            z.printStackTrace();
+            //z.printStackTrace();
         }
+
+        return 0; // if it manages to somehow reach this, it probably failed anyways
     }
 
     void Send(String BufferOut, PrintWriter netout) {
