@@ -12,7 +12,7 @@ public class NetUtils
         {
             netout.write(BufferOut);
             netout.flush();
-            System.out.println("Sent outwards buffer to server, waiting for response from server");
+            System.out.println("Sent outwards buffer" + " " + '\"' + BufferOut + '\"' + " " + "to server, waiting for response from server");
 
             if (netin.readLine().equals(ExpectedReply)) {
                 System.out.println("Got expected string from server");
@@ -39,6 +39,6 @@ public class NetUtils
     void Send(String BufferOut, PrintWriter netout) {
         netout.write(BufferOut);
         netout.flush();
-        System.out.println("Sent outwards buffer to server");
+        System.out.println("Sent outwards buffer" + '"' + BufferOut + '"' + "to server");
     }
 }
