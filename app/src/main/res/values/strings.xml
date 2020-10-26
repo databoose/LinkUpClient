@@ -3,6 +3,9 @@
     <string name="linkup">LinkUp</string>
     <string name="go">Go</string>
 
+    <string name="nullstr"></string>
+    <string name="youcantap">Tap to copy</string>
+
     <!-- our external icons -->
     <string name="info_ic_person">Person icon</string>
     <string name="info_ic_wave">Wave icon</string>
