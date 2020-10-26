@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-// TODO : add toast if user is timed out/banned, and if user has timed out the connection
+// TODO : Get app to recognize when we enter activity_lobby and tell that to the server by sending a string "inlobby"
 
 class ConnTask implements Runnable
 {
@@ -46,6 +46,27 @@ class ConnTask implements Runnable
 
             NetUtilsObj.Send("ny3_"+ Globals.HwidString, netout); // Sending
 
+            long start = System.currentTimeMillis();
+            long timeout = start + 6000; // timeout is 6 seconds
+
+            CheckLobby:
+            do {
+                if (Globals.InLobby == true) {
+                    Log.d("ConnThread", "Telling server we're in the lobby activity now");
+                    NetUtilsObj.Send("inlobby", netout);
+                    break CheckLobby;
+                }
+
+                if(System.currentTimeMillis() >= timeout) {
+                    Log.d("ConnThread", "Timed out on main do loop");
+                    break CheckLobby;
+                }
+            } while (true);
+
+            Globals.ConnectCode = netin.readLine();
+            Log.d("ConnThread", "ConnectCode : " + Globals.ConnectCode);
+
+
             Log.d("ConnThread", "Closing socket now");
             sock.close();
             Thread.sleep(50); //50ms to mitigate spamming
@@ -59,11 +80,19 @@ class ConnTask implements Runnable
 public class MainActivity extends AppCompatActivity
 {
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        Globals.InLobby = false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Globals.InLobby = false;
+        Globals.IsVerified = false;
         Main();
     }
 
@@ -75,16 +104,19 @@ public class MainActivity extends AppCompatActivity
 
     public void showToast(String ToastString) {
         Toast toast = Toast.makeText(this , ToastString, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, -10);
+        toast.setGravity(Gravity.CENTER, 0, 1200);
         toast.show();
     }
 
-
     public void btnGo(View v) throws InterruptedException {
-        Globals.IsVerified = false;
-
         Thread tconn = new Thread(new ConnTask());
-        tconn.start(); // starting thread to handle connection for us, doesn't mess with UI thread
+
+        if(tconn.isAlive() == false) {
+            tconn.start(); // starting thread to handle connection for us, doesn't mess with UI thread
+        }
+        else {
+            return; // exits btnGo() early
+        }
 
         long start = System.currentTimeMillis();
         long timeout = start + 6000; // timeout is 6 seconds
@@ -93,7 +125,7 @@ public class MainActivity extends AppCompatActivity
             if (Globals.IsVerified == true) {
                 Globals.IsVerified = false;
 
-                System.out.println("True");
+                Log.d("btnGo","Verified");
                 Intent intent = new Intent(this, LobbyActivity.class);
                 startActivity(intent);
                 break;
