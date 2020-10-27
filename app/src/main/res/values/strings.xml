@@ -5,6 +5,7 @@
 
     <string name="nullstr"></string>
     <string name="youcantap">Tap to copy</string>
+    <string name="yourcode">Your session code</string>
 
     <!-- our external icons -->
     <string name="info_ic_person">Person icon</string>
