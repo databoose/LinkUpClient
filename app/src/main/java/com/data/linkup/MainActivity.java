@@ -54,6 +54,9 @@ class ConnTask implements Runnable
                 if (Globals.InLobby == true) {
                     Log.d("ConnThread", "Telling server we're in the lobby activity now");
                     NetUtilsObj.Send("inlobby", netout);
+                    Globals.ConnectCode = netin.readLine();
+                    Log.d("ConnThread", "ConnectCode : " + Globals.ConnectCode);
+                    
                     break CheckLobby;
                 }
 
@@ -62,10 +65,6 @@ class ConnTask implements Runnable
                     break CheckLobby;
                 }
             } while (true);
-
-            Globals.ConnectCode = netin.readLine();
-            Log.d("ConnThread", "ConnectCode : " + Globals.ConnectCode);
-
 
             Log.d("ConnThread", "Closing socket now");
             sock.close();
