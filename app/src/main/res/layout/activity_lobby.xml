@@ -8,27 +8,43 @@
 
     <TextView
         android:id="@+id/codeView"
-        android:layout_width="wrap_content"
+        android:layout_width="269dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="79dp"
-        android:text="@string/nullstr"
-        android:textSize="45sp"
-        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="172dp"
+        android:gravity="center"
 
-        android:onClick="codeViewClick"/>
+        android:onClick="codeViewClick"
+        android:text="test"
+        android:textSize="49sp" />
 
     <TextView
         android:id="@+id/youcantapView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="149dp"
+        android:layout_marginTop="151dp"
+        android:layout_marginBottom="561dp"
         android:text="@string/youcantap"
         android:textColor="#F79A9A9A" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="340dp"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="472dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
