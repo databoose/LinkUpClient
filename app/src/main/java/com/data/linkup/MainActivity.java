@@ -51,11 +51,15 @@ class ConnTask implements Runnable
 
             CheckLobby:
             do {
+                Thread.sleep(100);
                 if (Globals.InLobby == true) {
                     Log.d("ConnThread", "Telling server we're in the lobby activity now");
                     NetUtilsObj.Send("inlobby", netout);
                     Globals.ConnectCode = netin.readLine();
+                    Globals.GotConnectCode = true;
+
                     Log.d("ConnThread", "ConnectCode : " + Globals.ConnectCode);
+                    Globals.GotConnectCode = false; // to prevent race condition
                     
                     break CheckLobby;
                 }
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         Globals.InLobby = false;
         Globals.IsVerified = false;
+        Globals.GotConnectCode = false;
         Main();
     }
 
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity
         long timeout = start + 6000; // timeout is 6 seconds
 
         do {
+            Thread.sleep(40);
             if (Globals.IsVerified == true) {
                 Globals.IsVerified = false;
 
