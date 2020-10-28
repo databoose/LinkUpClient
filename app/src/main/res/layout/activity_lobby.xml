@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,24 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="165dp"
         android:gravity="center"
 
         android:onClick="codeViewClick"
         android:text="test"
         android:textSize="49sp" />
-
-    <TextView
-        android:id="@+id/youcantapView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="151dp"
-        android:layout_marginBottom="561dp"
-        android:text="@string/youcantap"
-        android:textColor="#F79A9A9A" />
 
     <View
         android:id="@+id/divider2"
@@ -38,13 +27,56 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginBottom="472dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="479dp"
         android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/YourCodeView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="138dp"
+        android:layout_marginEnd="155dp"
+        android:text="@string/yourcode"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/youcantapView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="233dp"
+        android:layout_marginBottom="479dp"
+        android:text="@string/youcantap"
+        android:textColor="#F79A9A9A" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="39dp"
+        android:layout_height="41dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="360dp"
+        android:layout_marginTop="681dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="9dp"
+        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="96dp"
+        android:text="@string/connectorsend"
+        android:textSize="20sp" />
 
 </RelativeLayout>
