@@ -24,7 +24,8 @@ public class LobbyActivity extends AppCompatActivity
         Globals.InLobby = true;
 
         while(true) {
-            if(Globals.ConnectCode != null && Globals.GotConnectCode == true) {
+            if(Globals.GotConnectCode == true) {
+                Log.d("onCreate_Lobby", "Setting ConnectCode to UI");
                 TextView codeView = (TextView)findViewById(R.id.codeView);
                 codeView.setText(Globals.ConnectCode);
                 codeView.setGravity(Gravity.CENTER);
