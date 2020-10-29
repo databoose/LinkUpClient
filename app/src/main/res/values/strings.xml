@@ -5,7 +5,6 @@
 
     <string name="nullstr"></string>
     <string name="youcantap">Tap to copy</string>
-    <string name="yourcode">Session code</string>
     <string name="connectorsend">Connect to a code, or send code to recipient</string>
 
     <!-- our external icons -->
