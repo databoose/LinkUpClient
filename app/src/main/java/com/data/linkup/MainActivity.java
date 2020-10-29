@@ -57,6 +57,7 @@ class ConnTask implements Runnable
                     NetUtilsObj.Send("inlobby", netout);
                     Globals.ConnectCode = netin.readLine();
                     Globals.GotConnectCode = true;
+                    Thread.sleep(30); // giving LobbyActivity's onCreate() thread a little time to see we got the code
 
                     Log.d("ConnThread", "ConnectCode : " + Globals.ConnectCode);
                     Globals.GotConnectCode = false; // to prevent race condition
@@ -73,6 +74,7 @@ class ConnTask implements Runnable
             Log.d("ConnThread", "Closing socket now");
             sock.close();
             Thread.sleep(50); //50ms to mitigate spamming
+            return;
         }
         catch (IOException | InterruptedException e) {
             e.printStackTrace();
