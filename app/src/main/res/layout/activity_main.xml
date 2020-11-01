@@ -6,29 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnGo"
-        android:layout_width="136dp"
-        android:layout_height="104dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="562dp"
-        android:layout_marginBottom="65dp"
-        android:background="#2B2B2B"
-        android:fontFamily="sans-serif-light"
-        android:onClick="btnGo"
-        android:text="@string/go"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.917" />
-
     <TextView
         android:id="@+id/lblLogo"
         android:layout_width="284dp"
@@ -49,24 +26,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.014" />
-
-    <ImageView
-        android:id="@+id/vctrWave"
-        android:layout_width="242dp"
-        android:layout_height="241dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="339dp"
-        android:contentDescription="@string/info_ic_wave"
-        app:layout_constraintBottom_toTopOf="@+id/btnGo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358"
-        app:srcCompat="@drawable/ic_baseline_wifi_24" />
 
     <TextView
         android:id="@+id/lblHwid"
@@ -100,4 +59,44 @@
         app:layout_constraintVertical_bias="0.654"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
+    <ImageView
+        android:id="@+id/vctrWave"
+        android:layout_width="242dp"
+        android:layout_height="241dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="339dp"
+        android:contentDescription="@string/info_ic_wave"
+        app:layout_constraintBottom_toTopOf="@+id/btnGo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.358"
+        app:srcCompat="@drawable/ic_baseline_wifi_24" />
+
+    <Button
+        android:id="@+id/btnGo"
+        android:layout_width="136dp"
+        android:layout_height="104dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="562dp"
+        android:layout_marginBottom="65dp"
+        android:background="#2B2B2B"
+        android:fontFamily="sans-serif-light"
+        android:onClick="btnGo"
+        android:text="@string/go"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.917" />
 </RelativeLayout>
