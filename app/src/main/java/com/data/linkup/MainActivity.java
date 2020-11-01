@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-// TODO : Get app to recognize when we enter activity_lobby and tell that to the server by sending a string "inlobby"
+// TODO : Optimize XML layout, make a standard for alignment. android:layout_alignParentStart="true" / android:layout_alignParentBottom="true" seem to work well
 
 class ConnTask implements Runnable
 {
@@ -96,14 +96,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //initializing
         Globals.InLobby = false;
         Globals.IsVerified = false;
         Globals.GotConnectCode = false;
         Main();
     }
 
-    public void Main()
-    {
+    public void Main() {
         Globals.HwidString = Settings.Secure.getString(getContentResolver(), "android_id");
         ((TextView) findViewById(R.id.lblHwid)).setText(Globals.HwidString);
     }
