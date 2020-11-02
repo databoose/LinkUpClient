@@ -9,22 +9,21 @@
 
     <ImageView
         android:id="@+id/vctrArrowLeft"
-        android:layout_width="101dp"
-        android:layout_height="61dp"
+        android:layout_width="73dp"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="635dp"
+        android:layout_marginBottom="636dp"
         android:scaleX="-1"
-
         app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
 
     <ImageView
         android:id="@+id/vctrArrowRight"
-        android:layout_width="79dp"
-        android:layout_height="66dp"
+        android:layout_width="73dp"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="259dp"
+        android:layout_marginBottom="253dp"
         app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
 
     <ImageView
@@ -33,8 +32,8 @@
         android:layout_height="125dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginBottom="234dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="221dp"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
@@ -43,9 +42,8 @@
         android:layout_height="125dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="234dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginBottom="232dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginBottom="221dp"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
@@ -53,11 +51,9 @@
         android:layout_width="114dp"
         android:layout_height="125dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="251dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="606dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginBottom="605dp"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
@@ -65,28 +61,10 @@
         android:layout_width="114dp"
         android:layout_height="125dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="-1dp"
-        android:layout_marginBottom="607dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="605dp"
         app:srcCompat="@drawable/ic_baseline_person_24" />
-
-    <Button
-        android:id="@+id/btnConnect"
-        android:layout_width="134dp"
-        android:layout_height="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="614dp"
-        android:layout_marginBottom="47dp"
-        android:background="#2B2B2B"
-        android:fontFamily="sans-serif-light"
-        android:text="Connect"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="21sp" />
 
     <TextView
         android:id="@+id/orView"
@@ -95,8 +73,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="330dp"
-        android:layout_marginBottom="380dp"
+        android:layout_marginTop="341dp"
+        android:layout_marginBottom="369dp"
         android:text="OR"
         android:textAlignment="center"
         android:textSize="18sp" />
@@ -108,9 +86,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="232dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="394dp"
+        android:layout_marginStart="231dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="383dp"
         android:background="?android:attr/listDivider" />
 
     <View
@@ -119,8 +97,8 @@
         android:layout_height="1dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="394dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="383dp"
         android:background="?android:attr/listDivider" />
 
     <TextView
@@ -140,30 +118,30 @@
 
     <EditText
         android:id="@+id/editTextCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="268dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="85dp"
-        android:layout_marginEnd="81dp"
-        android:layout_marginBottom="131dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="105dp"
+        android:backgroundTint="#808080"
         android:cursorVisible="false"
         android:ems="10"
         android:hint="User's code"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textColor="@android:color/tertiary_text_light"
-        android:backgroundTint="#808080"/>
+        android:textColor="@android:color/tertiary_text_light" />
 
     <TextView
-        android:id="@+id/textYouCanRecieveView"
+        android:id="@+id/textYouCanReceiveView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="180dp"
+        android:layout_marginBottom="173dp"
         android:text="@string/connector_send"
         android:textSize="30sp" />
 
@@ -190,12 +168,12 @@
 
     <TextView
         android:id="@+id/textYouTopView"
-        android:layout_width="41dp"
+        android:layout_width="34dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="88dp"
-        android:layout_marginBottom="637dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="634dp"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
@@ -203,16 +181,32 @@
 
     <TextView
         android:id="@+id/textYouBottomView"
-        android:layout_width="41dp"
+        android:layout_width="34dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="100dp"
-        android:layout_marginBottom="263dp"
+        android:layout_marginBottom="250dp"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="113dp"
+        android:layout_height="52dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="638dp"
+        android:layout_marginBottom="39dp"
+        android:background="#2B2B2B"
+        android:fontFamily="sans-serif-light"
+        android:text="Connect"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="21sp" />
 
     <ImageView
         android:id="@+id/btnHelp"
