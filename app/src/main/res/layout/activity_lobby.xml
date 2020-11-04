@@ -128,18 +128,20 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/connector_send"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="518dp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="539dp" />
 
     <TextView
         android:id="@+id/textYouCanSendView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
         android:text="@string/connector_receive"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="131dp" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="142dp" />
 
     <TextView
         android:id="@+id/textYouCanTapView"
@@ -166,27 +168,27 @@
         android:id="@+id/textYouBottomView"
         android:layout_width="34dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="250dp"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="462dp" />
 
     <Button
         android:id="@+id/btnConnect"
         android:layout_width="113dp"
         android:layout_height="52dp"
+        android:layout_marginBottom="36dp"
         android:background="#2B2B2B"
         android:fontFamily="sans-serif-light"
         android:text="Connect"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="21sp"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="639dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/btnHelp"

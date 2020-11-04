@@ -5,8 +5,8 @@
 
     <string name="nullstr"></string>
     <string name="youcantap">Tap to copy</string>
-    <string name="connector_receive">Send code to recipient</string>
-    <string name="connector_send">Connect to recipient</string>
+    <string name="connector_receive">Send your location code to recipient</string>
+    <string name="connector_send">Connect to recipient location code</string>
 
     <!-- our external icons -->
     <string name="info_ic_person">Person icon</string>
