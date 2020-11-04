@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/keystore-linkup/linkup-release-key.keystore
+/app/release/app-release.apk
+/app/release/output-metadata.json
