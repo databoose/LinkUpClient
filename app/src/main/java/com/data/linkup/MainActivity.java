@@ -27,7 +27,7 @@ class ConnTask implements Runnable
 
         try
         {
-            Socket sock = new Socket("10.0.0.224", 64912);
+            Socket sock = new Socket("10.0.0.225", 64912);
             sock.setSoTimeout(12000);
 
             BufferedReader netin = new BufferedReader(new InputStreamReader(sock.getInputStream()));
