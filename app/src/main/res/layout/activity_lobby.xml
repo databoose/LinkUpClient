@@ -10,102 +10,151 @@
 
     <ImageView
         android:id="@+id/vctrArrowLeft"
-        android:layout_width="73dp"
-        android:layout_height="55dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scaleX="-1"
-        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="40dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textYouCanSendView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.396"
+        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
 
     <ImageView
         android:id="@+id/vctrArrowRight"
-        android:layout_width="73dp"
-        android:layout_height="55dp"
-        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="424dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.626"
+        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint1"
-        android:layout_width="114dp"
-        android:layout_height="125dp"
-        app:srcCompat="@drawable/ic_baseline_person_24"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="386dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636"
+        app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint2"
-        android:layout_width="114dp"
-        android:layout_height="125dp"
-        app:srcCompat="@drawable/ic_baseline_person_24"
-        tools:layout_editor_absoluteX="236dp"
-        tools:layout_editor_absoluteY="386dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.807"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636"
+        app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint3"
-        android:layout_width="114dp"
-        android:layout_height="125dp"
-        app:srcCompat="@drawable/ic_baseline_person_24"
-        tools:layout_editor_absoluteX="236dp"
-        tools:layout_editor_absoluteY="2dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.807"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint4"
-        android:layout_width="114dp"
-        android:layout_height="125dp"
-        app:srcCompat="@drawable/ic_baseline_person_24"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="2dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <TextView
         android:id="@+id/orView"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="341dp"
-        android:layout_marginBottom="369dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
         android:text="OR"
         android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.993" />
 
     <View
         android:id="@+id/divider"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginStart="231dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="383dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="170dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginBottom="383dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.475" />
 
     <TextView
         android:id="@+id/codeView"
-        android:layout_width="316dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="View to see the ConnectCode"
+        android:layout_marginBottom="464dp"
 
+        android:contentDescription="View to see the ConnectCode"
         android:gravity="center"
         android:onClick="codeViewClick"
         android:text="null"
         android:textAlignment="center"
         android:textSize="73sp"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="169dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textYouCanSendView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textYouCanSendView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:text="@string/connector_receive"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.204" />
+
+    <TextView
+        android:id="@+id/textYouCanTapView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="428dp"
+        android:text="@string/youcantap"
+        android:textColor="#F79A9A9A"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/codeView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/editTextCode"
@@ -118,8 +167,12 @@
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColor="@android:color/tertiary_text_light"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="566dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textYouCanReceiveView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textYouCanReceiveView"
@@ -129,57 +182,47 @@
         android:layout_centerVertical="true"
         android:text="@string/connector_send"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="539dp" />
-
-    <TextView
-        android:id="@+id/textYouCanSendView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="@string/connector_receive"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="142dp" />
-
-    <TextView
-        android:id="@+id/textYouCanTapView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/youcantap"
-        android:textColor="#F79A9A9A"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="267dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.754" />
 
     <TextView
         android:id="@+id/textYouTopView"
-        android:layout_width="34dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="78dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/vctrPersonPoint4"
+        app:layout_constraintEnd_toEndOf="@+id/vctrPersonPoint4"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="@+id/vctrPersonPoint4"
+        app:layout_constraintTop_toTopOf="@+id/vctrPersonPoint4"
+        app:layout_constraintVertical_bias="0.735" />
 
     <TextView
         android:id="@+id/textYouBottomView"
-        android:layout_width="34dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="462dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/vctrPersonPoint1"
+        app:layout_constraintEnd_toEndOf="@+id/vctrPersonPoint1"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="@+id/vctrPersonPoint1"
+        app:layout_constraintTop_toTopOf="@+id/vctrPersonPoint1"
+        app:layout_constraintVertical_bias="0.782" />
 
     <Button
         android:id="@+id/btnConnect"
         android:layout_width="113dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="36dp"
         android:background="#2B2B2B"
         android:fontFamily="sans-serif-light"
         android:text="Connect"
@@ -188,14 +231,19 @@
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCode" />
 
     <ImageView
         android:id="@+id/btnHelp"
         android:layout_width="39dp"
         android:layout_height="41dp"
         android:contentDescription="Help button"
-        app:srcCompat="@drawable/ic_baseline_help_outline_24"
-        tools:layout_editor_absoluteX="360dp"
-        tools:layout_editor_absoluteY="681dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
