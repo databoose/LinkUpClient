@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // this is default values divided by 2.10
-    <dimen name="linkup_logo_textsize">60</dimen>
+    <dimen name="linkup_logo_textsize">10</dimen>
     <dimen name="linkup_logo_width">163</dimen>
     <dimen name="linkup_logo_height">65</dimen>
     <dimen name="vctrwave_height">206</dimen>
