@@ -1,0 +1,1 @@
+- Always add dp to the end of a value in dimens.xml's, or else you will get an error and not be able to run the app.

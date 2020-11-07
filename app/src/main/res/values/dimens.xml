@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
         // default values (since we're using a pixel 2 emulator)
-        <dimen name="linkup_logo_textsize">110</dimen>
-        <dimen name="linkup_logo_width">343</dimen>
-        <dimen name="linkup_logo_height">137</dimen>
-        <dimen name="vctrwave_height">246</dimen>
-        <dimen name="vctrwave_width">269</dimen>
+        <dimen name="linkup_logo_textsize">110sp</dimen>
+        <dimen name="linkup_logo_width">343dp</dimen>
+        <dimen name="linkup_logo_height">137dp</dimen>
 
-        <dimen name="vctrperson_height">174</dimen>
-        <dimen name="vctrperson_width">206</dimen>
+        <dimen name="vctrwave_height">246dp</dimen>
+        <dimen name="vctrwave_width">269dp</dimen>
+
+        <dimen name="vctrperson_height">174dp</dimen>
+        <dimen name="vctrperson_width">206dp</dimen>
 </resources>
