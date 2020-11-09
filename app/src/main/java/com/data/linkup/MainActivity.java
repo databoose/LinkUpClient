@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity
 
     public void btnGo(View v) throws InterruptedException {
         Thread tconn = new Thread(new ConnTask());
+        Thread.sleep(300);
 
         if(tconn.isAlive() == false) {
             tconn.start(); // starting thread to handle connection for us, doesn't mess with UI thread
