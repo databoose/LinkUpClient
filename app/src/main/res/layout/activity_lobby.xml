@@ -7,36 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".LobbyActivity">
 
-
     <ImageView
         android:id="@+id/vctrArrowLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="51dp"
+        android:layout_height="48dp"
         android:scaleX="-1"
         app:layout_constraintBottom_toTopOf="@+id/textYouCanSendView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/vctrPersonPoint3"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toEndOf="@+id/vctrPersonPoint4"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.396"
+        app:layout_constraintVertical_bias="0.526"
         app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
 
     <ImageView
         android:id="@+id/vctrArrowRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="51dp"
+        android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/vctrPersonPoint2"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toEndOf="@+id/vctrPersonPoint1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.626"
         app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="98dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.182"
@@ -47,8 +46,8 @@
 
     <ImageView
         android:id="@+id/vctrPersonPoint2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="98dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.807"
@@ -59,32 +58,32 @@
 
     <ImageView
         android:id="@+id/vctrPersonPoint3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="98dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.807"
+        app:layout_constraintHorizontal_bias="0.844"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.025"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="98dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.025"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <TextView
         android:id="@+id/orView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="26dp"
         android:layout_marginBottom="8dp"
         android:background="#FFFFFF"
         android:text="OR"
@@ -105,27 +104,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.475" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/codeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="464dp"
 
+        android:layout_marginTop="171dp"
         android:contentDescription="View to see the ConnectCode"
         android:gravity="center"
         android:onClick="codeViewClick"
         android:text="null"
         android:textAlignment="center"
         android:textSize="73sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textYouCanTapView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textYouCanSendView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.27" />
 
     <TextView
         android:id="@+id/textYouCanSendView"
@@ -139,22 +137,22 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.204" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <TextView
         android:id="@+id/textYouCanTapView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="33dp"
         android:layout_marginBottom="428dp"
         android:text="@string/youcantap"
+        android:textAlignment="center"
         android:textColor="#F79A9A9A"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/codeView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/codeView" />
 
     <EditText
         android:id="@+id/editTextCode"
@@ -176,8 +174,8 @@
 
     <TextView
         android:id="@+id/textYouCanReceiveView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="309dp"
+        android:layout_height="28dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/connector_send"
@@ -191,33 +189,33 @@
 
     <TextView
         android:id="@+id/textYouTopView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="34sp"
+        android:layout_height="21sp"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/vctrPersonPoint4"
         app:layout_constraintEnd_toEndOf="@+id/vctrPersonPoint4"
-        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/vctrPersonPoint4"
         app:layout_constraintTop_toTopOf="@+id/vctrPersonPoint4"
-        app:layout_constraintVertical_bias="0.735" />
+        app:layout_constraintVertical_bias="0.792" />
 
     <TextView
         android:id="@+id/textYouBottomView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="34sp"
+        android:layout_height="21sp"
         android:text="You"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/vctrPersonPoint1"
         app:layout_constraintEnd_toEndOf="@+id/vctrPersonPoint1"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/vctrPersonPoint1"
         app:layout_constraintTop_toTopOf="@+id/vctrPersonPoint1"
-        app:layout_constraintVertical_bias="0.782" />
+        app:layout_constraintVertical_bias="0.792" />
 
     <Button
         android:id="@+id/btnConnect"

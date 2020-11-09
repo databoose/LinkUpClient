@@ -9,20 +9,20 @@
 
     <TextView
         android:id="@+id/lblLogo"
-        android:layout_width="296dp"
-        android:layout_height="131dp"
+        android:layout_width="294dp"
+        android:layout_height="118dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:shadowColor="#676565"
         android:text="@string/linkup"
         android:textColor="#000000"
         android:textSize="90sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/vctrWave"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.31" />
 
     <TextView
         android:id="@+id/lblHwid"
@@ -41,35 +41,33 @@
 
     <ImageView
         android:id="@+id/vctrPerson"
-        android:layout_width="206dp"
-        android:layout_height="174dp"
+        android:layout_width="172dp"
+        android:layout_height="166dp"
+        android:layout_marginBottom="28dp"
         android:contentDescription="@string/info_ic_person"
         app:layout_constraintBottom_toTopOf="@+id/btnGo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/vctrWave"
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <ImageView
         android:id="@+id/vctrWave"
-        android:layout_width="@dimen/vctrwave_width"
-        android:layout_height="@dimen/vctrwave_height"
+        android:layout_width="191dp"
+        android:layout_height="175dp"
         android:contentDescription="@string/info_ic_wave"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.331"
+        app:layout_constraintVertical_bias="0.303"
         app:srcCompat="@drawable/ic_baseline_wifi_24" />
 
     <Button
         android:id="@+id/btnGo"
-        android:layout_width="136dp"
-        android:layout_height="104dp"
-        android:layout_marginTop="562dp"
-        android:layout_marginBottom="65dp"
+        android:layout_width="126dp"
+        android:layout_height="97dp"
         android:background="#2B2B2B"
         android:fontFamily="sans-serif-light"
         android:onClick="btnGo"
@@ -79,10 +77,8 @@
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.892" />
 </androidx.constraintlayout.widget.ConstraintLayout>
