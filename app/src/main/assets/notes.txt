@@ -1,3 +1,5 @@
 - only use DP and don't fuck with dimens
 - only use small phone emulators for worst case scenario
 - title bar seems to fuck with views so disable that
+
+android:layout_marginStart="44dp" found in textYouCanSendView, this could be causing the fucked up positioning, also added gravity center to xml and seemes to have fixed improper positioning
