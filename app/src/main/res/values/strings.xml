@@ -3,7 +3,6 @@
     <string name="linkup">LinkUp</string>
     <string name="go">Go</string>
 
-    <string name="nullstr"></string>
     <string name="youcantap">Tap to copy</string>
     <string name="connector_receive">Send your location code to recipient</string>
     <string name="connector_send">Connect to recipient location code</string>
