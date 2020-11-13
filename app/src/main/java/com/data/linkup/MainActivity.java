@@ -1,5 +1,6 @@
 package com.data.linkup;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,14 +20,13 @@ import java.net.Socket;
 
 // TODO : Optimize XML layout, make a standard for alignment. android:layout_alignParentStart="true" / android:layout_alignParentBottom="true" seem to work well
 
-class ConnTask implements Runnable
-{
-    public void run()
-    {
+// TODO : Fix client freeze on second connection attempt in single session
+
+class ConnTask implements Runnable {
+    public void run() {
         NetUtils NetUtilsObj = new NetUtils();
 
-        try
-        {
+        try {
             Socket sock = new Socket("10.0.0.225", 64912);
             sock.setSoTimeout(12000);
 
@@ -36,92 +36,77 @@ class ConnTask implements Runnable
             int ret = NetUtilsObj.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
             if (ret == 1) {
                 Globals.IsVerified = true;
-            }
-            else if (ret == 0) {
+            } else if (ret == 0) {
                 Log.e("ConnThread", "Verification failed, closing socket and not proceeding...");
                 Globals.IsVerified = false;
                 sock.close();
                 return;
             }
 
-            NetUtilsObj.Send("ny3_"+ Globals.HwidString, netout); // Sending
+            NetUtilsObj.Send("ny3_" + Globals.HwidString, netout); // Sending
 
             long start = System.currentTimeMillis();
             long timeout = start + 6000; // timeout is 6 seconds
 
-            CheckLobby:
             do {
                 Thread.sleep(100);
                 if (Globals.InLobby == true) {
                     Log.d("ConnThread", "Telling server we're in the lobby activity now");
                     NetUtilsObj.Send("inlobby", netout);
-                    Globals.ConnectCode = netin.readLine();
-                    Globals.GotConnectCode = true;
-                    Thread.sleep(30); // giving LobbyActivity's onCreate() thread a little time to see we got the code
+                    Globals.setConnectCode("ConnTask", netin.readLine());
+                    Globals.setGotConnectCode("ConnTask", true); // this is turned to false after received by LobbyActivity
+                    Log.d("ConnThread", "ConnTask : " + Globals.ConnectCode);
 
-                    Log.d("ConnThread", "ConnectCode : " + Globals.ConnectCode);
-                    Globals.GotConnectCode = false; // to prevent race condition
-                    
-                    break CheckLobby;
+                    break;
                 }
 
-                if(System.currentTimeMillis() >= timeout) {
+                if (System.currentTimeMillis() >= timeout) {
                     Log.d("ConnThread", "Timed out on main do loop");
-                    break CheckLobby;
+                    break;
                 }
             } while (true);
 
             Log.d("ConnThread", "Closing socket now");
             sock.close();
             Thread.sleep(50); //50ms to mitigate spamming
-            return;
-        }
-        catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 }
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        Globals.InLobby = false;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //initializing
-        Globals.InLobby = false;
-        Globals.IsVerified = false;
-        Globals.GotConnectCode = false;
+        Globals.setInLobby("onCreate_MainActivity", false);
+        Globals.setIsVerified("onCreate_MainActivity", false);
+        Globals.setGotConnectCode("onCreate_MainActivity", false);
         Main();
     }
 
+    @SuppressLint("HardwareIds")
     public void Main() {
-        Globals.HwidString = Settings.Secure.getString(getContentResolver(), "android_id");
+        Globals.setHwidString("MainActivity_Main()", Settings.Secure.getString(getContentResolver(), "android_id"));
         ((TextView) findViewById(R.id.lblHwid)).setText(Globals.HwidString);
     }
 
     public void showToast(String ToastString) {
-        Toast toast = Toast.makeText(this , ToastString, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, ToastString, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 1200);
         toast.show();
     }
 
-    public void btnGo(View v) throws InterruptedException {
+    public void btnGo(View view) throws InterruptedException {
         Thread tconn = new Thread(new ConnTask());
         Thread.sleep(300);
 
-        if(tconn.isAlive() == false) {
+        if (tconn.isAlive() == false) {
             tconn.start(); // starting thread to handle connection for us, doesn't mess with UI thread
-        }
-        else {
+        } else {
             return; // exits btnGo() early
         }
 
@@ -131,18 +116,17 @@ public class MainActivity extends AppCompatActivity
         do {
             Thread.sleep(40);
             if (Globals.IsVerified == true) {
-                Globals.IsVerified = false;
-
-                Log.d("btnGo","Verified");
+                Log.d("btnGo", "Verified");
                 Intent intent = new Intent(this, LobbyActivity.class);
                 startActivity(intent);
                 break;
             }
 
-            if(System.currentTimeMillis() >= timeout) {
+            if (System.currentTimeMillis() >= timeout) {
                 showToast("Connection timed out");
                 break;
             }
         } while (true);
+
     }
 }
