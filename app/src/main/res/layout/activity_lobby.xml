@@ -29,7 +29,8 @@
         app:layout_constraintStart_toEndOf="@+id/vctrPersonPoint1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.626"
-        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
+        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint1"
@@ -41,7 +42,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.636"
-        app:srcCompat="@drawable/ic_baseline_person_24" />
+        app:srcCompat="@drawable/ic_baseline_person_24"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/vctrPersonPoint2"
@@ -53,7 +55,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.636"
-        app:srcCompat="@drawable/ic_baseline_person_24" />
+        app:srcCompat="@drawable/ic_baseline_person_24"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/orView"
@@ -67,7 +70,8 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.481" />
+        app:layout_constraintVertical_bias="0.481"
+        tools:ignore="HardcodedText" />
 
     <View
         android:id="@+id/divider"
@@ -97,7 +101,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284" />
+        app:layout_constraintVertical_bias="0.284"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textYouCanSendView"
@@ -126,7 +131,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.036"
-        app:srcCompat="@drawable/ic_baseline_person_24" />
+        app:srcCompat="@drawable/ic_baseline_person_24"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/vctrArrowLeft"
@@ -139,7 +145,8 @@
         app:layout_constraintStart_toEndOf="@+id/vctrPersonPoint4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.07"
-        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24" />
+        app:srcCompat="@drawable/ic_baseline_arrow_right_alt_24"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textYouTopView"
@@ -156,7 +163,8 @@
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/vctrPersonPoint4"
         app:layout_constraintTop_toTopOf="@+id/vctrPersonPoint4"
-        app:layout_constraintVertical_bias="0.792" />
+        app:layout_constraintVertical_bias="0.792"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textYouCanTapView"
@@ -184,7 +192,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.036"
-        app:srcCompat="@drawable/ic_baseline_person_24" />
+        app:srcCompat="@drawable/ic_baseline_person_24"
+        tools:ignore="ContentDescription" />
 
     <EditText
         android:id="@+id/editTextCode"
@@ -202,7 +211,9 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textYouCanReceiveView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="HardcodedText"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/textYouCanReceiveView"
@@ -235,7 +246,8 @@
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="@+id/vctrPersonPoint1"
         app:layout_constraintTop_toTopOf="@+id/vctrPersonPoint1"
-        app:layout_constraintVertical_bias="0.792" />
+        app:layout_constraintVertical_bias="0.792"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnConnect"
@@ -250,7 +262,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCode" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCode"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/btnHelp"
@@ -263,5 +276,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976"
-        app:srcCompat="@drawable/ic_baseline_help_outline_24" />
+        app:srcCompat="@drawable/ic_baseline_help_outline_24"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
