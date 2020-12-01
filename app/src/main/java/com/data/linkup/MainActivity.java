@@ -19,7 +19,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 // TODO : Optimize XML layout, make a standard for alignment. android:layout_alignParentStart="true" / android:layout_alignParentBottom="true" seem to work well
-
 // TODO : Fix client freeze on second connection attempt in single session
 
 class ConnTask implements Runnable {
@@ -36,26 +35,27 @@ class ConnTask implements Runnable {
             int ret = NetUtilsObj.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
             if (ret == 1) {
                 Globals.IsVerified = true;
-            } else if (ret == 0) {
+            }
+            else if (ret == 0) {
                 Log.e("ConnThread", "Verification failed, closing socket and not proceeding...");
                 Globals.IsVerified = false;
                 sock.close();
                 return;
             }
 
+            Log.d("ConnThread", "Sending HWID to server...");
             NetUtilsObj.Send("ny3_" + Globals.HwidString, netout); // Sending
 
             long start = System.currentTimeMillis();
             long timeout = start + 6000; // timeout is 6 seconds
 
-            do {
-                Thread.sleep(100);
+            while (true) {
+                Thread.sleep(20);
                 if (Globals.InLobby == true) {
                     Log.d("ConnThread", "Telling server we're in the lobby activity now");
                     NetUtilsObj.Send("inlobby", netout);
                     Globals.setConnectCode("ConnTask", netin.readLine());
                     Globals.setGotConnectCode("ConnTask", true); // this is turned to false after received by LobbyActivity
-                    Log.d("ConnThread", "ConnTask : " + Globals.ConnectCode);
 
                     break;
                 }
@@ -64,12 +64,27 @@ class ConnTask implements Runnable {
                     Log.d("ConnThread", "Timed out on main do loop");
                     break;
                 }
-            } while (true);
+            }
+
+            while (true) {
+                if (Globals.InLobby == false) {
+                    Log.d("ConnThread", "Ending connection because user exited lobby, telling server we're done");
+                    NetUtilsObj.Send("done", netout);
+                    break; // break to end and close our socket
+                }
+
+                if(Globals.Connecting == true) {
+                    Log.d("ConnThread", "User wants to connect to someone");
+                    NetUtilsObj.Send("connectto_" + Globals.TargetCode, netout); // prefix for buffer is connectto_ so the server knows we're trying to connect to target code
+                    Globals.setConnecting("ConnThread",false); // reset
+                }
+            }
 
             Log.d("ConnThread", "Closing socket now");
             sock.close();
             Thread.sleep(50); //50ms to mitigate spamming
-        } catch (IOException | InterruptedException e) {
+        }
+        catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -85,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Globals.setInLobby("onCreate_MainActivity", false);
         Globals.setIsVerified("onCreate_MainActivity", false);
         Globals.setGotConnectCode("onCreate_MainActivity", false);
+        Globals.setConnecting("onCreate_MainActivity", false);
         Main();
     }
 
