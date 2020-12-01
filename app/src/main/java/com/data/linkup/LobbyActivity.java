@@ -27,7 +27,6 @@ public class LobbyActivity extends AppCompatActivity {
         Main();
     }
 
-
     public void Main() {
         for (;;) {
             if (Globals.GotConnectCode == true) {
@@ -37,7 +36,8 @@ public class LobbyActivity extends AppCompatActivity {
                 codeView.setGravity(Gravity.CENTER);
 
                 break;
-            } else {
+            }
+            else {
                 continue;
             }
         }
@@ -62,12 +62,23 @@ public class LobbyActivity extends AppCompatActivity {
         Globals.setIsVerified("btnGo", false);
     }
 
+    public void btnConnect(View view) {
+        Globals.setTargetCode("btnConnect", codeInput.getText().toString());
+        Globals.setConnecting("btnConnect", true);
+    }
+
     @Override
     public void onBackPressed() {
         Log.d("LobbyActivity", "Back pressed in LobbyActivity, switching Globals.InLobby to false");
         Globals.setInLobby("LobbyActivity_onBackPressed()", false);
         super.onBackPressed();
+    }
 
+    @Override
+    public void onStop() {
+        Log.d("LobbyActivity", "System called onStop(), telling ConnTask we're done with LobbyActivity");
+        Globals.setInLobby("LobbyActivity_onStop()", false);
+        super.onStop();
     }
 
     public void codeViewClick(View view) {
