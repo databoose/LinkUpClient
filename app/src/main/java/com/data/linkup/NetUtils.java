@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 public class NetUtils {
     int SendAndWaitReply(String BufferOut, String ExpectedReply, BufferedReader netin, PrintWriter netout) {
         try {
-            netout.write(BufferOut);
+            netout.write(BufferOut + "\0");
             netout.flush();
             System.out.println("Sent outwards buffer" + " " + BufferOut + " " + "to server, waiting for response from server");
 
@@ -31,7 +31,7 @@ public class NetUtils {
     }
 
     void Send(String BufferOut, PrintWriter netout) {
-        netout.write(BufferOut);
+        netout.write(BufferOut + "\0");
         netout.flush();
         System.out.println("Sent outwards buffer" + '"' + BufferOut + '"' + "to server");
     }
