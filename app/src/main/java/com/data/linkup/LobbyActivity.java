@@ -28,16 +28,17 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void Main() {
-        for (;;) {
+        //Log.d("Main", "Main got here");
+        while(true) {
             if (Globals.GotConnectCode == true) {
                 Log.d("LobbyActivity_Main", "Setting ConnectCode to UI");
                 TextView codeView = findViewById(R.id.codeView);
                 codeView.setText(Globals.ConnectCode);
-                codeView.setGravity(Gravity.CENTER);
-
+                Globals.setGotConnectCode("LobbyActivity_Main", false); // this resets the switch for next connection, do not remove
                 break;
             }
-            else {
+            else if (Globals.GotConnectCode == false) {
+                System.out.println("GotConnectCode is false");
                 continue;
             }
         }
