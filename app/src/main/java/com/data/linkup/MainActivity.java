@@ -52,7 +52,6 @@ class ConnTask implements Runnable {
             while (true) {
                 Thread.sleep(20);
                 if (Globals.InLobby == true) {
-                    Log.d("ConnThread", "Telling server we're in the lobby activity now");
                     NetUtilsObj.Send("inlobby", netout);
                     Globals.setConnectCode("ConnTask", netin.readLine());
                     Globals.setGotConnectCode("ConnTask", true); // this is turned to false after received by LobbyActivity
