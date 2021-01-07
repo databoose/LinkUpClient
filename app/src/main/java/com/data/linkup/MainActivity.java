@@ -26,11 +26,11 @@ class ConnTask implements Runnable {
         NetUtils NetUtilsObj = new NetUtils();
 
         try {
-            Socket sock = new Socket("10.0.0.225", 64912);
-            sock.setSoTimeout(12000);
+            Globals.setSocket("ConnTask", new Socket("10.0.0.225", 64912));
+            Globals.sock.setSoTimeout(12000);
 
-            BufferedReader netin = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            PrintWriter netout = new PrintWriter(sock.getOutputStream());
+            BufferedReader netin = new BufferedReader(new InputStreamReader(Globals.sock.getInputStream()));
+            PrintWriter netout = new PrintWriter(Globals.sock.getOutputStream());
 
             int ret = NetUtilsObj.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
             if (ret == 1) {
@@ -39,7 +39,7 @@ class ConnTask implements Runnable {
             else if (ret == 0) {
                 Log.e("ConnThread", "Verification failed, closing socket and not proceeding...");
                 Globals.IsVerified = false;
-                sock.close();
+                Globals.sock.close();
                 return;
             }
 
@@ -80,7 +80,7 @@ class ConnTask implements Runnable {
             }
 
             Log.d("ConnThread", "Closing socket now");
-            sock.close();
+            Globals.sock.close();
             Thread.sleep(50); //50ms to mitigate spamming
         }
         catch (IOException | InterruptedException e) {
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnGo(View view) throws InterruptedException {
+        Globals.clearSocket("btnGo", Globals.sock);
         Thread tconn = new Thread(new ConnTask());
         Thread.sleep(300);
 

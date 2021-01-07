@@ -38,7 +38,7 @@ public class LobbyActivity extends AppCompatActivity {
                 break;
             }
             else if (Globals.GotConnectCode == false) {
-                System.out.println("GotConnectCode is false");
+                //System.out.println("GotConnectCode is false");
                 continue;
             }
         }

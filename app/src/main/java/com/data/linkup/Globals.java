@@ -2,6 +2,8 @@ package com.data.linkup;
 
 import android.util.Log;
 
+import java.net.Socket;
+
 public class Globals {
     // SETTERS FOR CLIENT INFO
     public static String HwidString;
@@ -40,7 +42,19 @@ public class Globals {
         }
     }
 
-
+    public static Socket sock;
+    public static void clearSocket(String callerIdent, Socket socket) {
+        sock = null;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "nullified sock (socket)");
+        }
+    }
+    public static void setSocket(String callerIdent, Socket socket) {
+        sock = socket;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set sock (socket) to : " + sock.toString());
+        }
+    }
 
     // SETTERS FOR CONNECTING TO TARGET CONNECT CODE
     public static Boolean Connecting;
