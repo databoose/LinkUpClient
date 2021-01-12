@@ -18,7 +18,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-// TODO : Optimize XML layout, make a standard for alignment. android:layout_alignParentStart="true" / android:layout_alignParentBottom="true" seem to work well
 // TODO : Fix client freeze on second connection attempt in single session
 
 class ConnTask implements Runnable {
@@ -117,8 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnGo(View view) throws InterruptedException {
         Globals.clearSocket("btnGo", Globals.sock);
+        if (Globals.sock != null) {
+            showToast("Error, connection probably already open, restart app");
+            return;
+        }
         Thread tconn = new Thread(new ConnTask());
-        Thread.sleep(300);
+        Thread.sleep(200);
 
         if (tconn.isAlive() == false) {
             tconn.start(); // starting thread to handle connection for us, doesn't mess with UI thread
@@ -133,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             Thread.sleep(40);
             if (Globals.IsVerified == true) {
                 Log.d("btnGo", "Verified");
+                Log.d("btnGo", "Connnectcode : " + Globals.ConnectCode);
                 Intent intent = new Intent(this, LobbyActivity.class);
                 startActivity(intent);
                 break;

@@ -28,8 +28,11 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void Main() {
-        //Log.d("Main", "Main got here");
         while(true) {
+            try {Thread.sleep(10);} // for some reason, if we don't do an operation here, this loop does not run
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if (Globals.GotConnectCode == true) {
                 Log.d("LobbyActivity_Main", "Setting ConnectCode to UI");
                 TextView codeView = findViewById(R.id.codeView);
@@ -60,7 +63,7 @@ public class LobbyActivity extends AppCompatActivity {
         });
 
         //at end
-        Globals.setIsVerified("btnGo", false);
+        Globals.setIsVerified("LobbyActivity_Main()", false);
     }
 
     public void btnConnect(View view) {
