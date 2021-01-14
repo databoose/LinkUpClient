@@ -20,6 +20,29 @@ import java.net.Socket;
 
 // TODO : Fix client freeze on second connection attempt in single session
 
+class ListenTask implements Runnable {
+    public void run() {
+        System.out.println("ListenTask started");
+        NetUtils NetUtilsObj = new NetUtils();
+        BufferedReader netin = null;
+        try { netin = new BufferedReader(new InputStreamReader(Globals.sock.getInputStream())); }
+            catch (IOException e) { e.printStackTrace(); }
+
+            String ServMessage = "";
+            try { ServMessage = netin.readLine(); }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (ServMessage != null && ServMessage.contains("acceptordeny_") == true) {
+                String SenderName = ServMessage.replace("acceptordeny_", "");
+                Globals.setSenderName("ListenTask", SenderName);
+                System.out.println(SenderName + " wants to connect");
+                Globals.setReceivingConnection("ListenTask", true);
+            }
+    }
+}
+
 class ConnTask implements Runnable {
     public void run() {
         NetUtils NetUtilsObj = new NetUtils();
@@ -64,17 +87,19 @@ class ConnTask implements Runnable {
                 }
             }
 
+            new Thread(new ListenTask()).start();
             while (true) {
+                if(Globals.Connecting == true) {
+                    Log.d("ConnThread", "User wants to connect to someone");
+                    NetUtilsObj.Send("connectto_" + Globals.TargetCode, netout); // prefix for buffer is connectto_ so the server knows we're trying to connect to target code
+                    NetUtilsObj.Send(Globals.Name, netout);
+                    Globals.setConnecting("ConnThread",false); // reset
+                }
+
                 if (Globals.InLobby == false) {
                     Log.d("ConnThread", "Ending connection because user exited lobby, telling server we're done");
                     NetUtilsObj.Send("done", netout);
                     break; // break to end and close our socket
-                }
-
-                if(Globals.Connecting == true) {
-                    Log.d("ConnThread", "User wants to connect to someone");
-                    NetUtilsObj.Send("connectto_" + Globals.TargetCode, netout); // prefix for buffer is connectto_ so the server knows we're trying to connect to target code
-                    Globals.setConnecting("ConnThread",false); // reset
                 }
             }
 
@@ -91,6 +116,7 @@ class ConnTask implements Runnable {
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -99,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         Globals.setIsVerified("onCreate_MainActivity", false);
         Globals.setGotConnectCode("onCreate_MainActivity", false);
         Globals.setConnecting("onCreate_MainActivity", false);
+        Globals.setReceivingConnection("onCreate_MainActivity", false);
         Main();
     }
 
