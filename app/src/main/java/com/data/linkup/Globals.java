@@ -18,6 +18,14 @@ public class Globals {
         Log.d(callerIdent, "set ConnectCode to : " + connectcode);
     }
 
+    public static Boolean ReceivingConnection;
+    public static void setReceivingConnection(String callerIdent, Boolean trueorfalse) {
+        ReceivingConnection = trueorfalse;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set RecievingConnection to " + trueorfalse);
+        }
+    }
+
     public static Boolean IsVerified;
     public static void setIsVerified(String callerIdent, Boolean trueorfalse) {
         IsVerified = trueorfalse;
@@ -70,6 +78,22 @@ public class Globals {
         TargetCode = targetcode;
         if(BuildConfig.DEBUG) {
             Log.d(callerIdent, "set TargetCodde to : " + targetcode);
+        }
+    }
+
+    public static String Name;
+    public static void setName(String callerIdent, String name) {
+        Name = name;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set Name to : " + name);
+        }
+    }
+
+    public static String SenderName;
+    public static void setSenderName(String callerIdent, String incomingname) {
+        SenderName = incomingname;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set IncomingName to : " + SenderName);
         }
     }
 }
