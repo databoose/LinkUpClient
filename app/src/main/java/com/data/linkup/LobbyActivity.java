@@ -17,6 +17,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class LobbyActivity extends AppCompatActivity {
     EditText codeInput;
 
@@ -31,9 +34,50 @@ public class LobbyActivity extends AppCompatActivity {
         Main();
     }
 
+    public void showAlertDialog() throws IOException {
+        final PrintWriter netout = new PrintWriter(Globals.sock.getOutputStream());
+        AlertDialog.Builder builder = new AlertDialog.Builder(LobbyActivity.this);
+
+        builder.setTitle("Incoming connection");
+        builder.setMessage("User " + Globals.SenderName + " wants to know your location, accept?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        NetUtils.Send("YES", netout);
+                    }
+                };
+                AsyncTask.execute(runnable);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        NetUtils.Send("NO", netout);
+                    }
+                };
+                AsyncTask.execute(runnable);
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public void Main() {
-        while(true) {
-            try {Thread.sleep(10);} // for some reason, if we don't do an operation here, this loop does not run
+        while (true) {
+            try {
+                Thread.sleep(10);
+            } // for some reason, if we don't do an operation here, this loop does not run
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -43,8 +87,7 @@ public class LobbyActivity extends AppCompatActivity {
                 codeView.setText(Globals.ConnectCode);
                 Globals.setGotConnectCode("LobbyActivity_Main", false); // this resets the switch for next connection, do not remove
                 break;
-            }
-            else if (Globals.GotConnectCode == false) {
+            } else if (Globals.GotConnectCode == false) {
                 //System.out.println("GotConnectCode is false");
                 continue;
             }
@@ -65,42 +108,39 @@ public class LobbyActivity extends AppCompatActivity {
                     codeInput.setCursorVisible(false);
             }
         });
-        AsyncTask.execute(new Runnable() {
+
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                while(true) {
-                    if (Globals.ReceivingConnection == true && Globals.SenderName != null) {
+                System.out.println("Started runnable thread");
+                while (true) {
+                    if (Globals.ReceivingConnection == true) {
+                        try {  Thread.sleep(1000); } // for some reason adding sleep seems to help? investigate this
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("here");
                         runOnUiThread(new Runnable() {
-                            @Override
                             public void run() {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LobbyActivity.this);
-
-                                builder.setTitle("Incoming connection");
-                                builder.setMessage("User " + Globals.SenderName + " wants to know your location, accept?");
-
-                                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-
-                                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                AlertDialog alert = builder.create();
-                                alert.show();
+                                try {
+                                    showAlertDialog();
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
+
                         Globals.setReceivingConnection("LobbyActivity_Main()", false);
+                        break;
                     }
                 }
             }
-        });
+        };
+        AsyncTask.execute(runnable);
+
         //at end
-        Globals.setIsVerified("LobbyActivity_Main()", false);
+        Globals.setIsVerified("LobbyActivity_Main()",false);
     }
 
     public void btnConnect(View view) {
