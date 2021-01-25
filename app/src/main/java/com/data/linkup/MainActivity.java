@@ -20,25 +20,39 @@ import java.net.Socket;
 
 // TODO : Fix client freeze on second connection attempt in single session
 
+
 class ListenTask implements Runnable {
     public void run() {
         System.out.println("ListenTask started");
-        NetUtils NetUtilsObj = new NetUtils();
         BufferedReader netin = null;
         try { netin = new BufferedReader(new InputStreamReader(Globals.sock.getInputStream())); }
-            catch (IOException e) { e.printStackTrace(); }
-
-            String ServMessage = "";
-            try { ServMessage = netin.readLine(); }
             catch (IOException e) {
+            Log.e("ListenTask", "Error assigning netin : ");
                 e.printStackTrace();
             }
 
-            if (ServMessage != null && ServMessage.contains("acceptordeny_") == true) {
-                String SenderName = ServMessage.replace("acceptordeny_", "");
-                Globals.setSenderName("ListenTask", SenderName);
-                System.out.println(SenderName + " wants to connect");
-                Globals.setReceivingConnection("ListenTask", true);
+            while (true && Globals.InLobby == true) {
+                String ServMessage = "";
+                try { ServMessage = netin.readLine(); }
+                catch (IOException ReadException) {
+                    System.out.println(ReadException);
+
+                    try { netin = new BufferedReader(new InputStreamReader(Globals.sock.getInputStream())); }
+                    catch (IOException e) {
+                        Log.e("ListenTask", "Error assigning netin after closed socket: ");
+                        e.printStackTrace();
+                    }
+                    catch (NullPointerException z) {
+                        Log.d("ListenTask", "null pointer exception on netin assignment");
+                    }
+                }
+
+                if (ServMessage != null && ServMessage.contains("acceptordeny_") == true) {
+                    String SenderName = ServMessage.replace("acceptordeny_", "");
+                    Globals.setSenderName("ListenTask", SenderName);
+                    System.out.println(SenderName + " wants to connect");
+                    Globals.setReceivingConnection("ListenTask", true);
+                }
             }
     }
 }
