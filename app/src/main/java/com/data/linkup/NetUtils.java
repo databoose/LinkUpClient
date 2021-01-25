@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class NetUtils {
-    int SendAndWaitReply(String BufferOut, String ExpectedReply, BufferedReader netin, PrintWriter netout) {
+    static int SendAndWaitReply(String BufferOut, String ExpectedReply, BufferedReader netin, PrintWriter netout) {
         try {
             netout.write(BufferOut + "\0");
             netout.flush();
@@ -30,7 +30,7 @@ public class NetUtils {
         return 0; // if it manages to somehow reach this, it probably failed anyways
     }
 
-    void Send(String BufferOut, PrintWriter netout) {
+    static void Send(String BufferOut, PrintWriter netout) {
         netout.write(BufferOut + "\0");
         netout.flush();
         System.out.println("Sent outwards buffer" + '"' + BufferOut + '"' + "to server");
