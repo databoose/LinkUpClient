@@ -114,12 +114,13 @@ public class LobbyActivity extends AppCompatActivity {
             public void run() {
                 System.out.println("Started runnable thread");
                 while (true) {
+                    System.out.println("here");
                     if (Globals.ReceivingConnection == true) {
                         try {  Thread.sleep(1000); } // for some reason adding sleep seems to help? investigate this
                         catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("here");
+
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 try {
@@ -132,7 +133,7 @@ public class LobbyActivity extends AppCompatActivity {
                         });
 
                         Globals.setReceivingConnection("LobbyActivity_Main()", false);
-                        break;
+                        return;
                     }
                 }
             }
