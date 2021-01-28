@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 // TODO : Fix client freeze on second connection attempt in single session
 
@@ -34,6 +35,9 @@ class ListenTask implements Runnable {
             while (true && Globals.InLobby == true) {
                 String ServMessage = "";
                 try { ServMessage = netin.readLine(); }
+                catch (SocketTimeoutException z) {
+                    Log.d("ListenTask", "socket timeout on ListenTask");
+                }
                 catch (IOException ReadException) {
                     System.out.println(ReadException);
 
