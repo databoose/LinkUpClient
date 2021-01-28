@@ -9,13 +9,17 @@ public class Globals {
     public static String HwidString;
     public static void setHwidString(String callerIdent, String HWID) {
         HwidString = HWID;
-        Log.d(callerIdent, "set HWID string to :" + HWID);
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set HWID string to :" + HWID);
+        }
     }
 
     public static String ConnectCode;
     public static void setConnectCode(String callerIdent, String connectcode) {
         ConnectCode = connectcode;
-        Log.d(callerIdent, "set ConnectCode to : " + connectcode);
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set ConnectCode to : " + connectcode);
+        }
     }
 
     public static Boolean ReceivingConnection;
