@@ -114,7 +114,7 @@ public class LobbyActivity extends AppCompatActivity {
             public void run() {
                 System.out.println("Started runnable thread");
                 while (true) {
-                    System.out.println("here");
+                    //System.out.println("here");
                     if (Globals.ReceivingConnection == true) {
                         try {  Thread.sleep(1000); } // for some reason adding sleep seems to help? investigate this
                         catch (InterruptedException e) {
