@@ -100,4 +100,12 @@ public class Globals {
             Log.d(callerIdent, "set IncomingName to : " + SenderName);
         }
     }
+
+    public static String LatLong;
+    public static void setLatLong(String callerIdent, String latlong) {
+        LatLong = latlong;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set LatLong to : " + LatLong);
+        }
+    }
 }
