@@ -63,8 +63,6 @@ class ListenTask implements Runnable {
 
 class ConnTask implements Runnable {
     public void run() {
-        NetUtils NetUtilsObj = new NetUtils();
-
         try {
             Globals.setSocket("ConnTask", new Socket("10.0.0.225", 64912));
             Globals.sock.setSoTimeout(12000);
@@ -72,7 +70,7 @@ class ConnTask implements Runnable {
             BufferedReader netin = new BufferedReader(new InputStreamReader(Globals.sock.getInputStream()));
             PrintWriter netout = new PrintWriter(Globals.sock.getOutputStream());
 
-            int ret = NetUtilsObj.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
+            int ret = NetUtils.SendAndWaitReply("Ar4#8Pzw<&M00Nk", "4Ex{Y**y8wOh!T00", netin, netout); // Verification
             if (ret == 1) {
                 Globals.IsVerified = true;
             }
@@ -84,7 +82,7 @@ class ConnTask implements Runnable {
             }
 
             Log.d("ConnThread", "Sending HWID to server...");
-            NetUtilsObj.Send("ny3_" + Globals.HwidString, netout); // Sending
+            NetUtils.Send("ny3_" + Globals.HwidString, netout); // Sending
 
             long start = System.currentTimeMillis();
             long timeout = start + 6000; // timeout is 6 seconds
@@ -92,7 +90,7 @@ class ConnTask implements Runnable {
             while (true) {
                 Thread.sleep(20);
                 if (Globals.InLobby == true) {
-                    NetUtilsObj.Send("inlobby", netout);
+                    NetUtils.Send("inlobby", netout);
                     Globals.setConnectCode("ConnTask", netin.readLine());
                     Globals.setGotConnectCode("ConnTask", true); // this is turned to false after received by LobbyActivity
 
@@ -109,14 +107,14 @@ class ConnTask implements Runnable {
             while (true) {
                 if(Globals.Connecting == true) {
                     Log.d("ConnThread", "User wants to connect to someone");
-                    NetUtilsObj.Send("connectto_" + Globals.TargetCode, netout); // prefix for buffer is connectto_ so the server knows we're trying to connect to target code
-                    NetUtilsObj.Send(Globals.Name, netout);
+                    NetUtils.Send("connectto_" + Globals.TargetCode, netout); // prefix for buffer is connectto_ so the server knows we're trying to connect to target code
+                    NetUtils.Send(Globals.Name, netout);
                     Globals.setConnecting("ConnThread",false); // reset
                 }
 
                 if (Globals.InLobby == false) {
                     Log.d("ConnThread", "Ending connection because user exited lobby, telling server we're done");
-                    NetUtilsObj.Send("done", netout);
+                    NetUtils.Send("done", netout);
                     break; // break to end and close our socket
                 }
             }
@@ -144,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
         Globals.setGotConnectCode("onCreate_MainActivity", false);
         Globals.setConnecting("onCreate_MainActivity", false);
         Globals.setReceivingConnection("onCreate_MainActivity", false);
+
+        Globals.setLatLong("onCreate_MainActivity", "null");
         Main();
     }
 
@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.lblHwid)).setText(Globals.HwidString);
     }
 
-    public void showToast(String ToastString) {
-        Toast toast = Toast.makeText(this, ToastString, Toast.LENGTH_LONG);
+    private void showToast(String ToastString) {
+        Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 1200);
         toast.show();
     }
