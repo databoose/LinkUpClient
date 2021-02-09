@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -40,7 +39,7 @@ public class LobbyActivity extends AppCompatActivity {
         getLocation
     }
 
-    private void showToast(String ToastString) {
+    void showToast(String ToastString) {
         Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 1200);
         toast.show();
@@ -65,11 +64,7 @@ public class LobbyActivity extends AppCompatActivity {
                         showToast(parameter);
                         break;
                     case showAlert:
-                        try {
-                            showAlertDialog();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        showAlertDialog();
                         break;
                     case getLocation:
                         getLocation();
@@ -80,6 +75,7 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
      void getLocation() {
+        System.out.println("getLocation() called");
         // Get the location manager
         final LocationManager location_manager;
         final LocationListener location_listener;
@@ -88,7 +84,7 @@ public class LobbyActivity extends AppCompatActivity {
         location_listener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                Globals.setLatLong("onLocationChanged()", String.valueOf(location.getLatitude()) + "," + String.valueOf(location.getLongitude()));
+                Globals.setLatLong("onLocationChanged()", location.getLatitude() + "," + location.getLongitude());
                 return;
             }
 
@@ -120,19 +116,47 @@ public class LobbyActivity extends AppCompatActivity {
         }
     }
 
-    void showAlertDialog() throws IOException {
-        final PrintWriter netout = new PrintWriter(Globals.sock.getOutputStream());
-        AlertDialog.Builder builder = new AlertDialog.Builder(LobbyActivity.this);
+    public void btnConnect(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enter name (The recipient sees this)");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Globals.setName("btnConnect", input.getText().toString());
+                Globals.setTargetCode("btnConnect", codeInput.getText().toString());
+                Globals.setConnecting("btnConnect", true);
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Incoming connection");
         builder.setMessage("User " + Globals.SenderName + " wants to know your location, accept?");
-
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
+                        PrintWriter netout = null;
+                        try { netout = new PrintWriter(Globals.sock.getOutputStream()); } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         NetUtils.Send("YES", netout);
                         inUI(UIfunc.getLocation, "null"); // this starts a new thread pretty sure
                         while (true) {
@@ -140,6 +164,9 @@ public class LobbyActivity extends AppCompatActivity {
                                 Log.d("showAlertDialog()", "Location : " + Globals.LatLong);
                                 Globals.setLatLong("showAlertDialog()", "null");
                                 break;
+                            }
+                            else {
+                                //Log.d("showAlertDialog()", "waiting");
                             }
                         }
                     }
@@ -152,10 +179,13 @@ public class LobbyActivity extends AppCompatActivity {
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
+                        PrintWriter netout = null;
+                        try { netout = new PrintWriter(Globals.sock.getOutputStream()); } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         NetUtils.Send("NO", netout);
                     }
                 };
@@ -163,8 +193,9 @@ public class LobbyActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        AlertDialog alert = builder.create();
-        alert.show();
+        if(!LobbyActivity.this.isFinishing()) {
+            builder.show();
+        }
     }
 
     public void Main() {
@@ -180,7 +211,6 @@ public class LobbyActivity extends AppCompatActivity {
             }
             else if (Globals.GotConnectCode == false) {
                 //System.out.println("GotConnectCode is false");
-                continue;
             }
         }
 
@@ -208,12 +238,16 @@ public class LobbyActivity extends AppCompatActivity {
                     catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //System.out.println("here");-
                     if (Globals.ReceivingConnection == true) {
                         inUI(UIfunc.showAlert, "null");
-
                         Globals.setReceivingConnection("LobbyActivity_Main()", false);
-                        return;
+                    }
+                    if (Globals.CrossMessage.equals("invalid_code")) {
+                        inUI(UIfunc.showToast, "Invalid code entered");
+                        Globals.setCrossMessage("LobbyActivity_Main()", "");
+                    }
+                    else {
+                        //System.out.println("not");
                     }
                 }
             }
@@ -222,30 +256,6 @@ public class LobbyActivity extends AppCompatActivity {
 
         //at end
         Globals.setIsVerified("LobbyActivity_Main()",false);
-    }
-
-    public void btnConnect(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Enter name (The recipient sees this)");
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Globals.setName("btnConnect", input.getText().toString());
-                Globals.setTargetCode("btnConnect", codeInput.getText().toString());
-                Globals.setConnecting("btnConnect", true);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
     }
 
     @Override
