@@ -3,6 +3,7 @@ package com.data.linkup;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -56,6 +57,15 @@ class ListenTask implements Runnable {
                     Globals.setSenderName("ListenTask", SenderName);
                     System.out.println(SenderName + " wants to connect");
                     Globals.setReceivingConnection("ListenTask", true);
+                }
+
+                else if (ServMessage != null && ServMessage.equals("invalid_code") == true) {
+                    Log.d("ListenTask", "Invalid code entered");
+                    Globals.setCrossMessage("ListenTask","invalid_code");
+                }
+
+                else {
+                    Log.d("ListenTask", "got unknown message : " + "-" + ServMessage + "-");
                 }
             }
     }
@@ -143,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         Globals.setConnecting("onCreate_MainActivity", false);
         Globals.setReceivingConnection("onCreate_MainActivity", false);
 
+        Globals.setCrossMessage("onCreate_MainActivity", "");
         Globals.setLatLong("onCreate_MainActivity", "null");
         Main();
     }
@@ -153,14 +164,14 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.lblHwid)).setText(Globals.HwidString);
     }
 
-    private void showToast(String ToastString) {
+    public void showToast(String ToastString) {
         Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 1200);
         toast.show();
     }
 
     public void btnGo(View view) throws InterruptedException {
-        Globals.clearSocket("btnGo", Globals.sock);
+        Globals.clearSocket("btnGo");
         if (Globals.sock != null) {
             showToast("Error, connection probably already open, restart app");
             return;
