@@ -1,5 +1,6 @@
 package com.data.linkup;
 
+import android.os.Build;
 import android.util.Log;
 
 import java.net.Socket;
@@ -55,7 +56,7 @@ public class Globals {
     }
 
     public static Socket sock;
-    public static void clearSocket(String callerIdent, Socket socket) {
+    public static void clearSocket(String callerIdent) {
         sock = null;
         if(BuildConfig.DEBUG) {
             Log.d(callerIdent, "nullified sock (socket)");
@@ -106,6 +107,14 @@ public class Globals {
         LatLong = latlong;
         if(BuildConfig.DEBUG) {
             Log.d(callerIdent, "set LatLong to : " + LatLong);
+        }
+    }
+
+    public static String CrossMessage;
+    public static void setCrossMessage(String callerIdent, String crossmsg) {
+        CrossMessage = crossmsg;
+        if (BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set CrossMessage to : " + crossmsg);
         }
     }
 }
