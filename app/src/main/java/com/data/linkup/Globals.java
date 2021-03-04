@@ -15,11 +15,27 @@ public class Globals {
         }
     }
 
+    public static String BuildIdString;
+    public static void setBuildIdString(String callerIdent, String BuildId) {
+        BuildIdString = BuildId;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set Build ID string to :" + BuildId);
+        }
+    }
+
     public static String ConnectCode;
     public static void setConnectCode(String callerIdent, String connectcode) {
         ConnectCode = connectcode;
         if(BuildConfig.DEBUG) {
             Log.d(callerIdent, "set ConnectCode to : " + connectcode);
+        }
+    }
+
+    public static Boolean ThreadDone;
+    public static void setThreadDone(String callerIdent, Boolean trueorfalse) {
+        ThreadDone = trueorfalse;
+        if(BuildConfig.DEBUG) {
+            Log.d(callerIdent, "set ThreadDone to " + trueorfalse);
         }
     }
 
@@ -38,6 +54,7 @@ public class Globals {
             Log.d(callerIdent, "set IsVerified to : " + trueorfalse);
         }
     }
+
 
     public static Boolean InLobby;
     public static void setInLobby(String callerIdent, Boolean trueorfalse) {
