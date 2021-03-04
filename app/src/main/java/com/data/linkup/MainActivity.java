@@ -3,8 +3,6 @@ package com.data.linkup;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -19,9 +17,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Random;
 
 // TODO : Fix client freeze on second connection attempt in single session
-
 
 class ListenTask implements Runnable {
     public void run() {
@@ -74,7 +72,7 @@ class ListenTask implements Runnable {
 class ConnTask implements Runnable {
     public void run() {
         try {
-            Globals.setSocket("ConnTask", new Socket("10.0.0.225", 64912));
+            Globals.setSocket("ConnTask", new Socket("10.0.0.224", 64912));
             Globals.sock.setSoTimeout(12000);
 
             BufferedReader netin = new BufferedReader(new InputStreamReader(Globals.sock.getInputStream()));
@@ -153,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         Globals.setConnecting("onCreate_MainActivity", false);
         Globals.setReceivingConnection("onCreate_MainActivity", false);
 
+        Globals.setThreadDone("onCreate_MainActivity", false);
         Globals.setCrossMessage("onCreate_MainActivity", "");
         Globals.setLatLong("onCreate_MainActivity", "null");
         Main();
@@ -160,8 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("HardwareIds")
     public void Main() {
-        Globals.setHwidString("MainActivity_Main()", Settings.Secure.getString(getContentResolver(), "android_id"));
-        ((TextView) findViewById(R.id.lblHwid)).setText(Globals.HwidString);
+        if (Globals.BuildIdString == null || Globals.BuildIdString.length() == 0) {
+            int BuildId = (int)(Math.random() * (9999 - 1000 + 1) + 100);
+            Globals.setBuildIdString("MainActivity_Main()", String.valueOf(BuildId));
+        }
+        ((TextView) findViewById(R.id.lblBuildId)).setText(Globals.BuildIdString);
     }
 
     public void showToast(String ToastString) {
