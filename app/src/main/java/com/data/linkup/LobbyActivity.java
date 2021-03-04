@@ -1,8 +1,12 @@
 package com.data.linkup;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,11 +17,14 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,20 +36,30 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class LobbyActivity extends AppCompatActivity {
     EditText codeInput;
-
-    public enum UIfunc {
-        showToast,
-        showAlert,
-        getLocation
-    }
+    LocationManager location_manager = null;
+    LocationListener location_listener = null;
 
     void showToast(String ToastString) {
+        Looper.prepare();
         Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 1200);
         toast.show();
+    }
+
+    @Override
+    public void onStop() {
+        Log.d("LobbyActivity", "System called onStop(), telling ConnTask we're done with LobbyActivity");
+        Globals.setInLobby("LobbyActivity_onStop()", false);
+        super.onStop();
     }
 
     @Override
@@ -56,36 +73,100 @@ public class LobbyActivity extends AppCompatActivity {
         Main();
     }
 
-    void inUI(final UIfunc func, final String parameter) {
-        runOnUiThread(new Runnable() {
+    public void showAlertDialog() {
+        // could not be displaying second time because of socket timeout, or android SDK/compiler can literally be bugged here, utilizing finish() workaround thoughs
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
             public void run() {
-                switch (func) {
-                    case showToast:
-                        showToast(parameter);
-                        break;
-                    case showAlert:
-                        showAlertDialog();
-                        break;
-                    case getLocation:
+                final ExecutorService executor = Executors.newFixedThreadPool(5);
+                Log.d("showAlertDialog()", "ran");
+                AlertDialog.Builder alert = new AlertDialog.Builder(LobbyActivity.this);
+                alert.setMessage("User " + Globals.SenderName + " wants to know your location, accept?");
+                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                         getLocation();
-                        break;
-                }
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d("runnable", "hello from runnable");
+                                long start = System.currentTimeMillis();
+                                long timeout = start + 8000; // timeout is 8 seconds
+
+                                PrintWriter netout = null;
+                                try { netout = new PrintWriter(Globals.sock.getOutputStream()); } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                NetUtils.Send("YES", netout);
+                                while (true) {
+                                    if (!Objects.equals(Globals.LatLong, "null")) {
+                                        Log.d("showAlertDialog()", "Location : " + Globals.LatLong);
+                                        Globals.setLatLong("showAlertDialog()", "null");
+                                        Globals.setThreadDone("showAlertDialog Runnable", true);
+                                        return;
+                                    }
+                                    else {
+                                        Log.d("showAlertDialog()", "waiting");
+                                        try { Thread.sleep(2000); }
+                                        catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    if (System.currentTimeMillis() >= timeout) {
+                                        Log.d("showAlertDialog()", "Timed out on main do loop");
+                                        Globals.setThreadDone("showAlertDialog Runnable", true);
+                                        return;
+                                    }
+                                }
+                            }
+                        };
+                        executor.submit(runnable);
+                        for(;;) {
+                            if (Globals.ThreadDone == true) {
+                                Globals.setThreadDone("showAlertDialog()", false);
+                                Log.d("showAlertDialog()", "Thread is done");
+                                finish();
+                                System.exit(9);
+
+                                break;
+                            }
+                        }
+                    }
+                });
+
+                alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                PrintWriter netout = null;
+                                try { netout = new PrintWriter(Globals.sock.getOutputStream()); } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                NetUtils.Send("NO", netout);
+                            }
+                        };
+                        executor.submit(runnable);
+                    }
+                });
+
+                Dialog builder = alert.create();
+                builder.show();
             }
         });
     }
 
      void getLocation() {
         System.out.println("getLocation() called");
-        // Get the location manager
-        final LocationManager location_manager;
-        final LocationListener location_listener;
 
         location_manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         location_listener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 Globals.setLatLong("onLocationChanged()", location.getLatitude() + "," + location.getLongitude());
-                return;
+                location_manager.removeUpdates(location_listener);
             }
 
             public void onProviderDisabled(String s) {
@@ -100,15 +181,14 @@ public class LobbyActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 showToast("Need GPS permissions");
                 requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.INTERNET
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET
                 }, 10);
+                Log.d("GPS", "permission issues?");
             }
         }
 
         try {
             location_manager.requestLocationUpdates("gps", 50, 0, location_listener);
-            location_manager.removeUpdates(location_listener);
         }
         catch (SecurityException z) {
             showToast("Need GPS permissions, returning to lobby");
@@ -125,6 +205,7 @@ public class LobbyActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.d("btnConnect_OK_onClick()", "OK clicked");
                 Globals.setName("btnConnect", input.getText().toString());
                 Globals.setTargetCode("btnConnect", codeInput.getText().toString());
                 Globals.setConnecting("btnConnect", true);
@@ -142,61 +223,6 @@ public class LobbyActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Incoming connection");
-        builder.setMessage("User " + Globals.SenderName + " wants to know your location, accept?");
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        PrintWriter netout = null;
-                        try { netout = new PrintWriter(Globals.sock.getOutputStream()); } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        NetUtils.Send("YES", netout);
-                        inUI(UIfunc.getLocation, "null"); // this starts a new thread pretty sure
-                        while (true) {
-                            if (Globals.LatLong != "null") { // TODO this is still null for some reason, fix me
-                                Log.d("showAlertDialog()", "Location : " + Globals.LatLong);
-                                Globals.setLatLong("showAlertDialog()", "null");
-                                break;
-                            }
-                            else {
-                                //Log.d("showAlertDialog()", "waiting");
-                            }
-                        }
-                    }
-                };
-                AsyncTask.execute(runnable);
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Runnable runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        PrintWriter netout = null;
-                        try { netout = new PrintWriter(Globals.sock.getOutputStream()); } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        NetUtils.Send("NO", netout);
-                    }
-                };
-                AsyncTask.execute(runnable);
-                dialog.dismiss();
-            }
-        });
-        if(!LobbyActivity.this.isFinishing()) {
-            builder.show();
-        }
-    }
 
     public void Main() {
         while (true) {
@@ -233,17 +259,26 @@ public class LobbyActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                //noinspection InfiniteLoopStatement
+                for(;;) {
                     try {  Thread.sleep(500); } // conserve cpu
                     catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     if (Globals.ReceivingConnection == true) {
-                        inUI(UIfunc.showAlert, "null");
+                        showAlertDialog();
                         Globals.setReceivingConnection("LobbyActivity_Main()", false);
                     }
+
                     if (Globals.CrossMessage.equals("invalid_code")) {
-                        inUI(UIfunc.showToast, "Invalid code entered");
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                showToast("Invalid code");
+                            }
+                        };
+                        runnable.run();
                         Globals.setCrossMessage("LobbyActivity_Main()", "");
                     }
                     else {
@@ -258,19 +293,15 @@ public class LobbyActivity extends AppCompatActivity {
         Globals.setIsVerified("LobbyActivity_Main()",false);
     }
 
+
     @Override
     public void onBackPressed() {
         Log.d("LobbyActivity", "Back pressed in LobbyActivity, switching Globals.InLobby to false");
         Globals.setInLobby("LobbyActivity_onBackPressed()", false);
-        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
-    @Override
-    public void onStop() {
-        Log.d("LobbyActivity", "System called onStop(), telling ConnTask we're done with LobbyActivity");
-        Globals.setInLobby("LobbyActivity_onStop()", false);
-        super.onStop();
-    }
 
     public void codeViewClick(View view) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
