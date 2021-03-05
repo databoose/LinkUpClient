@@ -1,12 +1,9 @@
 package com.data.linkup;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +21,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,12 +32,9 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class LobbyActivity extends AppCompatActivity {
     EditText codeInput;
@@ -103,6 +96,7 @@ public class LobbyActivity extends AppCompatActivity {
                                         Log.d("showAlertDialog()", "Location : " + Globals.LatLong);
                                         Globals.setLatLong("showAlertDialog()", "null");
                                         Globals.setThreadDone("showAlertDialog Runnable", true);
+
                                         return;
                                     }
                                     else {
@@ -122,16 +116,22 @@ public class LobbyActivity extends AppCompatActivity {
                             }
                         };
                         executor.submit(runnable);
-                        for(;;) {
-                            if (Globals.ThreadDone == true) {
-                                Globals.setThreadDone("showAlertDialog()", false);
-                                Log.d("showAlertDialog()", "Thread is done");
-                                finish();
-                                System.exit(9);
 
-                                break;
+                        Runnable runnableLooper = new Runnable() {
+                            public void run() {
+                                for(;;) {
+                                    if (Globals.ThreadDone == true) {
+                                        Globals.setThreadDone("showAlertDialog()", false);
+                                        Log.d("showAlertDialog()", "Thread is done");
+                                        finish();
+                                        System.exit(9);
+
+                                        break;
+                                    }
+                                }
                             }
-                        }
+                        };
+                        executor.submit(runnableLooper);
                     }
                 });
 
