@@ -17,9 +17,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.Random;
-
-// TODO : Fix client freeze on second connection attempt in single session
 
 class ListenTask implements Runnable {
     public void run() {
