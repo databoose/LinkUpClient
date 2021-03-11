@@ -44,6 +44,10 @@ public class LobbyActivity extends AppCompatActivity {
     LocationListener location_listener = null;
 
     final ExecutorService executor = Executors.newFixedThreadPool(5);
+
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LobbyActivity.this);
+    SharedPreferences.Editor editor = prefs.edit();
+
     String inputSaved;
 
     void showToast(String ToastString) {
@@ -73,23 +77,16 @@ public class LobbyActivity extends AppCompatActivity {
 
     public void btnConnect(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LobbyActivity.this);
-
-        builder.setMessage("Enter name (The recipient sees this)");
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setMessage("Enter name (The recipient sees this)");
         builder.setView(input);
         input.setText(prefs.getString("inputSaved", inputSaved));
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LobbyActivity.this);
-                SharedPreferences.Editor editor = prefs.edit();
-                Log.d("btnConnect", "inputSaved = " + prefs.getString("inputSaved", inputSaved));
                 editor.putString("inputSaved", input.getText().toString());
                 editor.apply();
-
-                Log.d("btnConnect_OK_onClick()", "OK clicked");
 
                 Globals.setName("btnConnect", input.getText().toString());
                 Globals.setTargetCode("btnConnect", codeInput.getText().toString());
