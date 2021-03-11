@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
@@ -40,6 +42,9 @@ public class LobbyActivity extends AppCompatActivity {
     EditText codeInput;
     LocationManager location_manager = null;
     LocationListener location_listener = null;
+
+    final ExecutorService executor = Executors.newFixedThreadPool(5);
+    String inputSaved;
 
     void showToast(String ToastString) {
         Looper.prepare();
@@ -66,12 +71,49 @@ public class LobbyActivity extends AppCompatActivity {
         Main();
     }
 
+    public void btnConnect(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LobbyActivity.this);
+
+        builder.setMessage("Enter name (The recipient sees this)");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        input.setText(prefs.getString("inputSaved", inputSaved));
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LobbyActivity.this);
+                SharedPreferences.Editor editor = prefs.edit();
+                Log.d("btnConnect", "inputSaved = " + prefs.getString("inputSaved", inputSaved));
+                editor.putString("inputSaved", input.getText().toString());
+                editor.apply();
+
+                Log.d("btnConnect_OK_onClick()", "OK clicked");
+
+                Globals.setName("btnConnect", input.getText().toString());
+                Globals.setTargetCode("btnConnect", codeInput.getText().toString());
+                Globals.setConnecting("btnConnect", true);
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
     public void showAlertDialog() {
-        // could not be displaying second time because of socket timeout, or android SDK/compiler can literally be bugged here, utilizing finish() workaround thoughs
+        // could not be displaying second time because of socket timeout, or android SDK/compiler can literally be bugged here, utilizing finish() workaround though
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                final ExecutorService executor = Executors.newFixedThreadPool(5);
                 Log.d("showAlertDialog()", "ran");
                 AlertDialog.Builder alert = new AlertDialog.Builder(LobbyActivity.this);
                 alert.setMessage("User " + Globals.SenderName + " wants to know your location, accept?");
@@ -123,8 +165,9 @@ public class LobbyActivity extends AppCompatActivity {
                                     if (Globals.ThreadDone == true) {
                                         Globals.setThreadDone("showAlertDialog()", false);
                                         Log.d("showAlertDialog()", "Thread is done");
+
                                         finish();
-                                        System.exit(9);
+                                        System.exit(0);
 
                                         break;
                                     }
@@ -159,7 +202,7 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
      void getLocation() {
-        System.out.println("getLocation() called");
+        //System.out.println("getLocation() called");
 
         location_manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         location_listener = new LocationListener() {
@@ -194,33 +237,6 @@ public class LobbyActivity extends AppCompatActivity {
             showToast("Need GPS permissions, returning to lobby");
             Globals.setInLobby("LobbyActivity_onBackPressed()", false);
         }
-    }
-
-    public void btnConnect(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Enter name (The recipient sees this)");
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Log.d("btnConnect_OK_onClick()", "OK clicked");
-                Globals.setName("btnConnect", input.getText().toString());
-                Globals.setTargetCode("btnConnect", codeInput.getText().toString());
-                Globals.setConnecting("btnConnect", true);
-
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
     }
 
 
@@ -287,7 +303,7 @@ public class LobbyActivity extends AppCompatActivity {
                 }
             }
         };
-        AsyncTask.execute(runnable);
+        executor.submit(runnable);
 
         //at end
         Globals.setIsVerified("LobbyActivity_Main()",false);
