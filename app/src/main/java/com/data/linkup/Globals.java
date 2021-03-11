@@ -1,6 +1,8 @@
 package com.data.linkup;
 
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.net.Socket;
